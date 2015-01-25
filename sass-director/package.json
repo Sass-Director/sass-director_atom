@@ -1,0 +1,19 @@
+{
+  "name": "sass-director",
+  "main": "./lib/sass-director",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "activationCommands": {
+    "atom-workspace": "sass-director:toggle",
+    "atom-workspace": "sass-director:generate-sass-from-manifest",
+    "atom-workspace": "sass-director:add-manifest-file"
+  },
+  "repository": "https://github.com/atom/sass-director",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+      "node-fs": "0.1.7"
+  }
+}
