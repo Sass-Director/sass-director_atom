@@ -13,10 +13,22 @@
       'label': 'Sass Director'
       'submenu': [
         {
+          'label': 'Add Manifest File'
+          'command': 'sass-director:add-manifest-file'
+        }
+        {
+          'label': 'Generate'
+          'command': 'sass-director:generate'
+        }
+        {
           'label': 'Toggle'
           'command': 'sass-director:toggle'
         }
       ]
     ]
   }
+]
+'fileTypes': [
+    'sass'
+    'scss'
 ]

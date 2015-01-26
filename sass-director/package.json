@@ -2,11 +2,9 @@
   "name": "sass-director",
   "main": "./lib/sass-director",
   "version": "0.0.0",
-  "description": "A short description of your package",
+  "description": "Sass Director helps manage Sass Projects better by using your manifest files",
   "activationCommands": {
-    "atom-workspace": "sass-director:toggle",
-    "atom-workspace": "sass-director:generate-sass-from-manifest",
-    "atom-workspace": "sass-director:add-manifest-file"
+    "atom-workspace": "sass-director:toggle"
   },
   "repository": "https://github.com/atom/sass-director",
   "license": "MIT",
