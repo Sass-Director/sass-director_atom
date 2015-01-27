@@ -15,5 +15,4 @@ module.exports =
       @factory.addManifestFile()
 
   toggle: ->
-      console.log ""
       console.log "Sass-Director: Ready, Set, ACTION!"
