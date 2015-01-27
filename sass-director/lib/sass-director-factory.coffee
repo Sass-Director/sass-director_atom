@@ -1,3 +1,4 @@
+SassDirectorView = require './sass-director-view'
 {CompositeDisposable} = require 'atom'
 
 fs = require 'fs'
@@ -7,13 +8,16 @@ module.exports =
 class SassDirectorFactory
     # Single Factory instance
     factory: null
+    SassDirectorView: null
 
     # Generator Variables
     root_path: ""
     manifest_files: []
     strip_list: [';', '@import', '\'', '\"']
 
-    constructor: ->
+    constructor: (state) ->
+        @SassDirectorView = new SassDirectorView(state.sassDirectorViewState)
+        console.log @SassDirectorView
         return @factory if @factory isnt null
         # First Run
         @__buildPaths__()

@@ -2,8 +2,8 @@
 SassDirectorFactory = require './sass-director-factory'
 
 module.exports =
-  activate: ->
-    @factory = new SassDirectorFactory()
+  activate: (state) ->
+    @factory = new SassDirectorFactory(state)
     atom.commands.add 'atom-workspace', 'sass-director:toggle', => @toggle()
     atom.commands.add 'atom-workspace', 'sass-director:generate', => @generate()
     atom.commands.add 'atom-workspace', 'sass-director:add-manifest-file', => @addManifestFile()
@@ -15,4 +15,5 @@ module.exports =
       @factory.addManifestFile()
 
   toggle: ->
+      console.log ""
       console.log "Sass-Director: Ready, Set, ACTION!"
