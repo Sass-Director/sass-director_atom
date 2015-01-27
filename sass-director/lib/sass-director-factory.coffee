@@ -17,7 +17,6 @@ class SassDirectorFactory
 
     constructor: (state) ->
         @SassDirectorView = new SassDirectorView(state.sassDirectorViewState)
-        console.log @SassDirectorView
         return @factory if @factory isnt null
         # First Run
         @__buildPaths__()
@@ -26,9 +25,21 @@ class SassDirectorFactory
         @root_path = atom.project.getPaths()[0]
 
     __getImports__: ->
+        console.log 'Obtaining Imports now...'
+        # Needs to exist local to function
+        imports = []
         # Read each file from the @manifest_files
         for path in @manifest_files
-            console.log path
+            console.log('Path: ', path)
+            buffer = fs.readFileSync path
+            body = buffer.toString();
+            lines = body.split('\n')
+            imports = (line for line in lines when line.match(/^@import/gi) != null)
+            for el in imports
+                index = imports.indexOf(el)
+                for strip in @strip_list
+                    imports[index] = imports[index].split(strip).join('').trim()
+        return imports
 
     addManifestFile: ->
         manifest_path = atom.workspace.getActiveEditor().getPath()
@@ -56,4 +67,13 @@ class SassDirectorFactory
                     Dismiss: -> console.log "#{shortname} was added to the list of manifest files"
 
     generate: ->
-        console.log "Generating..."
+        console.log "Begin Generating Sequence..."
+        if @manifest_files.length == 0
+            atom.confirm
+                message: 'No Manifest Files were registered'
+                buttons:
+                    Dismiss: -> console.log "Abort Generate due to no manifest files logged"
+            return false
+        else
+            imports = @__getImports__()
+            console.log('Imports: ', imports)
