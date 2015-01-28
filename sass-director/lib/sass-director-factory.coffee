@@ -34,6 +34,14 @@ class SassDirectorFactory
                     imports[index] = imports[index].split(strip).join('').trim()
         return imports
 
+    __expandImports__: (imports) ->
+        dir_paths = []
+        for el in imports
+            index = imports.indexOf(el)
+            imports[index] = el.split('/')
+        return imports
+
+
     addManifestFile: (manifest) ->
         if _.contains(@manifest_files, manifest.path)
             atom.notifications.addError('This Manifest File already exists in Sass Director')
@@ -65,4 +73,4 @@ class SassDirectorFactory
             return false
         else
             imports = @__getImports__()
-            console.log('Imports: ', imports)
+            dirs = @__expandImports__(imports)
