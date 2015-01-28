@@ -8,7 +8,6 @@ module.exports =
 class SassDirectorFactory
     # Single Factory instance
     factory: null
-    SassDirectorView: null
 
     # Generator Variables
     root_path: ""
@@ -23,12 +22,6 @@ class SassDirectorFactory
 
     __buildPaths__: ->
         @root_path = atom.project.getPaths()[0]
-
-    __getManifestPath__: ->
-        obj = {}
-        obj.path = atom.workspace.getActiveEditor().getPath()
-        obj.name = obj.path.split("/")[obj.path.split("/").length - 1]
-        return obj
 
     __getImports__: ->
         console.log 'Obtaining Imports now...'
@@ -47,11 +40,8 @@ class SassDirectorFactory
                     imports[index] = imports[index].split(strip).join('').trim()
         return imports
 
-    addManifestFile: ->
-        manifest = @__getManifestPath__()
-
-        if @manifest_files.indexOf(manifest.path) >= 0 and @manifest_files.length > 0
-            # Notify user that file exists in watch already
+    addManifestFile: (manifest) ->
+        if _.contains(@manifest_files, manifest.path)
             atom.notifications.addError('This Manifest File already exists in Sass Director')
         else if manifest.name.match(/(\.sass$)|(\.scss$)/gi) == null
             atom.notifications.addError(manifest.name + ' is not a valid filetype')
@@ -59,18 +49,17 @@ class SassDirectorFactory
             @manifest_files.push(manifest.path)
             atom.notifications.addSuccess(manifest.name + ' was added to Sass Director')
 
-    removeManifestFile: ->
+    removeManifestFile: (manifest) ->
         if @manifest_files.length == 0
             atom.notifications.addError('No Manifest Files are being watched')
             return false
         else
-            manifest = @__getManifestPath__()
-
             if _.contains(@manifest_files, manifest.path)
                 i = @manifest_files.indexOf(manifest.path)
                 @manifest_files.splice(i, 1)
                 atom.notifications.addSuccess(manifest.name + ' was removed')
         console.log "Watched Manifest Files: ", @manifest_files
+        return true
 
     generate: ->
         console.log "Begin Generating Sequence..."

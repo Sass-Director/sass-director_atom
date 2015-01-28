@@ -13,10 +13,16 @@ module.exports =
       @factory.generate()
 
   addManifestFile: ->
-      @factory.addManifestFile()
+      @factory.addManifestFile(@__getManifest__())
 
   removeManifestFile: ->
-      @factory.removeManifestFile()
+      @factory.removeManifestFile(@__getManifest__())
+
+  __getManifest__: ->
+      obj = {}
+      obj.path = atom.workspace.getActiveEditor().getPath()
+      obj.name = obj.path.split("/")[obj.path.split("/").length - 1]
+      return obj
 
   toggle: ->
       console.log "Sass-Director: Ready, Set, ACTION!"
