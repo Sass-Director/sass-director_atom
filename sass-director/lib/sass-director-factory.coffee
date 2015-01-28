@@ -41,7 +41,6 @@ class SassDirectorFactory
             imports[index] = el.split('/')
         return imports
 
-
     addManifestFile: (manifest) ->
         if _.contains(@manifest_files, manifest.path)
             atom.notifications.addError('This Manifest File already exists in Sass Director')
@@ -74,3 +73,10 @@ class SassDirectorFactory
         else
             imports = @__getImports__()
             dirs = @__expandImports__(imports)
+            path = require 'path'
+
+            editor = atom.workspace.getActiveEditor()
+            p = editor.getPath()
+            root = path.dirname(p)
+
+            # Construct DIRs and Files using fs
