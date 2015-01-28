@@ -2,27 +2,37 @@
 SassDirectorFactory = require './sass-director-factory'
 
 module.exports =
-  activate: (state) ->
-    @factory = new SassDirectorFactory(state)
-    atom.commands.add 'atom-workspace', 'sass-director:toggle', => @toggle()
-    atom.commands.add 'atom-workspace', 'sass-director:generate', => @generate()
-    atom.commands.add 'atom-workspace', 'sass-director:add-manifest-file', => @addManifestFile()
-    atom.commands.add 'atom-workspace', 'sass-director:remove-manifest-file', => @removeManifestFile()
+    @SassDirector = null
 
-  generate: ->
-      @factory.generate()
+    activate: (state) ->
+        @SassDirector = new SassDirectorFactory(state)
+        atom.commands.add 'atom-workspace', 'sass-director:toggle', => @toggle()
+        atom.commands.add 'atom-workspace', 'sass-director:generate', => @generate()
+        atom.commands.add 'atom-workspace', 'sass-director:add-manifest-file', => @addManifestFile()
+        atom.commands.add 'atom-workspace', 'sass-director:remove-manifest-file', => @removeManifestFile()
 
-  addManifestFile: ->
-      @factory.addManifestFile(@__getManifest__())
+    generate: ->
+        @SassDirector.generate()
 
-  removeManifestFile: ->
-      @factory.removeManifestFile(@__getManifest__())
+    addManifestFile: ->
+        @SassDirector.addManifestFile(@__getManifest__())
 
-  __getManifest__: ->
-      obj = {}
-      obj.path = atom.workspace.getActiveEditor().getPath()
-      obj.name = obj.path.split("/")[obj.path.split("/").length - 1]
-      return obj
+    removeManifestFile: ->
+        @SassDirector.removeManifestFile(@__getManifest__())
 
-  toggle: ->
-      console.log "Sass-Director: Ready, Set, ACTION!"
+    #########################################################################
+    ######################### Helper Functions ##############################
+    #########################################################################
+
+    __getManifest__: ->
+        obj = {}
+        obj.path = atom.workspace.getActiveEditor().getPath()
+        obj.name = obj.path.split("/")[obj.path.split("/").length - 1]
+        return obj
+
+    #########################################################################
+    ######################## End Helper Functions ###########################
+    #########################################################################
+
+    toggle: ->
+        console.log "Sass-Director: Ready, Set, ACTION!"

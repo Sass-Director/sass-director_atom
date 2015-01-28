@@ -6,18 +6,12 @@ path = require 'path'
 
 module.exports =
 class SassDirectorFactory
-    # Single Factory instance
-    factory: null
-
     # Generator Variables
     root_path: ""
     manifest_files: []
     strip_list: [';', '@import', '\'', '\"']
 
     constructor: (state) ->
-        # @SassDirectorView = new SassDirectorView(state.sassDirectorViewState)
-        return @factory if @factory isnt null
-        # First Run
         @__buildPaths__()
 
     __buildPaths__: ->
