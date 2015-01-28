@@ -12,6 +12,7 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
-      "node-fs": "0.1.7"
+      "node-fs": "0.1.7",
+      "underscore-plus": "1.6.6"
   }
 }

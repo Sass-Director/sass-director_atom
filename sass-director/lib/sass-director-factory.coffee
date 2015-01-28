@@ -1,5 +1,6 @@
 SassDirectorView = require './sass-director-view'
 {CompositeDisposable} = require 'atom'
+_ = require 'underscore-plus'
 
 fs = require 'fs'
 path = require 'path'
@@ -47,24 +48,12 @@ class SassDirectorFactory
 
         if @manifest_files.indexOf(manifest_path) >= 0 and @manifest_files.length > 0
             # Notify user that file exists in watch already
-            atom.confirm
-                message: 'Manifest File already exists'
-                detailedMessage: shortname
-                buttons:
-                    Dismiss: -> console.log "#{shortname} already exists in #{@manifest_files}"
+            atom.notifications.addError('This Manifest File already exists in Sass Director')
         else if shortname.match(/(\.sass$)|(\.scss$)/gi) == null
-            atom.confirm
-                message: 'This is not a valid file'
-                detailedMessage: shortname
-                buttons:
-                    Dismiss: -> console.log "#{shortname} is not a valid filetype"
+            atom.notifications.addError(shortname + ' is not a valid filetype')
         else
             @manifest_files.push(manifest_path)
-            atom.confirm
-                message: 'Added new Manifest File'
-                detailedMessage: shortname
-                buttons:
-                    Dismiss: -> console.log "#{shortname} was added to the list of manifest files"
+            atom.notifications.addSuccess(shortname + ' was added to Sass Director')
 
     generate: ->
         console.log "Begin Generating Sequence..."
