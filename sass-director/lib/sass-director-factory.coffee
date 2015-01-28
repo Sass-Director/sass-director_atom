@@ -1,4 +1,3 @@
-SassDirectorView = require './sass-director-view'
 {CompositeDisposable} = require 'atom'
 _ = require 'underscore-plus'
 
@@ -17,13 +16,19 @@ class SassDirectorFactory
     strip_list: [';', '@import', '\'', '\"']
 
     constructor: (state) ->
-        @SassDirectorView = new SassDirectorView(state.sassDirectorViewState)
+        # @SassDirectorView = new SassDirectorView(state.sassDirectorViewState)
         return @factory if @factory isnt null
         # First Run
         @__buildPaths__()
 
     __buildPaths__: ->
         @root_path = atom.project.getPaths()[0]
+
+    __getManifestPath__: ->
+        obj = {}
+        obj.path = atom.workspace.getActiveEditor().getPath()
+        obj.name = obj.path.split("/")[obj.path.split("/").length - 1]
+        return obj
 
     __getImports__: ->
         console.log 'Obtaining Imports now...'
@@ -43,23 +48,35 @@ class SassDirectorFactory
         return imports
 
     addManifestFile: ->
-        manifest_path = atom.workspace.getActiveEditor().getPath()
-        shortname = manifest_path.split("/")[manifest_path.split("/").length - 1]
+        manifest = @__getManifestPath__()
 
-        if @manifest_files.indexOf(manifest_path) >= 0 and @manifest_files.length > 0
+        if @manifest_files.indexOf(manifest.path) >= 0 and @manifest_files.length > 0
             # Notify user that file exists in watch already
             atom.notifications.addError('This Manifest File already exists in Sass Director')
-        else if shortname.match(/(\.sass$)|(\.scss$)/gi) == null
-            atom.notifications.addError(shortname + ' is not a valid filetype')
+        else if manifest.name.match(/(\.sass$)|(\.scss$)/gi) == null
+            atom.notifications.addError(manifest.name + ' is not a valid filetype')
         else
-            @manifest_files.push(manifest_path)
-            atom.notifications.addSuccess(shortname + ' was added to Sass Director')
+            @manifest_files.push(manifest.path)
+            atom.notifications.addSuccess(manifest.name + ' was added to Sass Director')
+
+    removeManifestFile: ->
+        if @manifest_files.length == 0
+            atom.notifications.addError('No Manifest Files are being watched')
+            return false
+        else
+            manifest = @__getManifestPath__()
+
+            if _.contains(@manifest_files, manifest.path)
+                i = @manifest_files.indexOf(manifest.path)
+                @manifest_files.splice(i, 1)
+                atom.notifications.addSuccess(manifest.name + ' was removed')
+        console.log "Watched Manifest Files: ", @manifest_files
 
     generate: ->
         console.log "Begin Generating Sequence..."
         if @manifest_files.length == 0
             atom.confirm
-                message: 'No Manifest Files were registered'
+                message: 'No Manifest Files are registered'
                 buttons:
                     Dismiss: -> console.log "Abort Generate due to no manifest files logged"
             return false
