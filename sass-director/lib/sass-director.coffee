@@ -7,12 +7,16 @@ module.exports =
     atom.commands.add 'atom-workspace', 'sass-director:toggle', => @toggle()
     atom.commands.add 'atom-workspace', 'sass-director:generate', => @generate()
     atom.commands.add 'atom-workspace', 'sass-director:add-manifest-file', => @addManifestFile()
+    atom.commands.add 'atom-workspace', 'sass-director:remove-manifest-file', => @removeManifestFile()
 
   generate: ->
       @factory.generate()
 
   addManifestFile: ->
       @factory.addManifestFile()
+
+  removeManifestFile: ->
+      @factory.removeManifestFile()
 
   toggle: ->
       console.log "Sass-Director: Ready, Set, ACTION!"

@@ -24,6 +24,10 @@
           'label': 'Toggle'
           'command': 'sass-director:toggle'
         }
+        {
+          'label': 'Remove Manifest'
+          'command': 'sass-director:remove-manifest-file'
+        }
       ]
     ]
   }
