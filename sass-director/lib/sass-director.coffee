@@ -2,8 +2,6 @@
 SassDirectorFactory = require './sass-director-factory'
 
 module.exports =
-    @SassDirector = null
-
     activate: (state) ->
         @SassDirector = new SassDirectorFactory(state)
         atom.commands.add 'atom-workspace', 'sass-director:toggle', => @toggle()
