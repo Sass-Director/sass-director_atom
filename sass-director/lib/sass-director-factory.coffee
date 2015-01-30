@@ -18,12 +18,10 @@ class SassDirectorFactory
         @root_path = atom.project.getPaths()[0]
 
     __getImports__: ->
-        console.log 'Obtaining Imports now...'
         # Needs to exist local to function
         imports = []
         # Read each file from the @manifest_files
         for path in @manifest_files
-            console.log('Path: ', path)
             buffer = fs.readFileSync path
             body = buffer.toString();
             lines = body.split('\n')
@@ -62,7 +60,6 @@ class SassDirectorFactory
         return true
 
     generate: ->
-        console.log 'Begin Generating Sequence...'
         if @manifest_files.length == 0
             atom.confirm
                 message: 'No Manifest Files are registered'
@@ -85,11 +82,7 @@ class SassDirectorFactory
                 file_name = '_' + dir.pop() + '.scss'
                 file_path = dir_path = root_path
 
-                console.log 'Dir: ' + dir
-                console.log 'Dirs: ' + dirs
-
                 for directory_name in dir
-                    console.log 'Dirname: ' + directory_name
                     file_path = path.join(file_path, directory_name)
                     dir_path = path.join(dir_path, directory_name)
                     # Check if dir exists -> produce error
