@@ -16,8 +16,9 @@ apm install sass-director
 
 ### Tutorial
 
-1. Add Manifest Files you wish to generate Files/Directories for calling the ```Sass Director: Add Manifest File``` command
-2. Once ready, call ```Sass Director: Generate``` to create the folders and files for each added manifest
+1. Run ```Sass Director: Toggle``` to activate the project
+2. Add Manifest Files you wish to generate Files/Directories for calling the ```Sass Director: Add Manifest File``` command
+3. Once ready, call ```Sass Director: Generate``` to create the folders and files for each added manifest
 
 ### License
 
