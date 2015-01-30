@@ -1,36 +1,36 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
 'context-menu':
-  'atom-text-editor': [
+'atom-text-editor': [
     {
-      'label': 'Toggle sass-director'
-      'command': 'sass-director:toggle'
+        'label': 'Toggle sass-director'
+        'command': 'sass-director:toggle'
     }
-  ]
+]
 'menu': [
-  {
-    'label': 'Packages'
-    'submenu': [
-      'label': 'Sass Director'
-      'submenu': [
-        {
-          'label': 'Add Manifest File'
-          'command': 'sass-director:add-manifest-file'
-        }
-        {
-          'label': 'Generate'
-          'command': 'sass-director:generate'
-        }
-        {
-          'label': 'Toggle'
-          'command': 'sass-director:toggle'
-        }
-        {
-          'label': 'Remove Manifest'
-          'command': 'sass-director:remove-manifest-file'
-        }
-      ]
-    ]
-  }
+    {
+        'label': 'Packages'
+        'submenu': [
+            'label': 'Sass Director'
+            'submenu': [
+                {
+                    'label': 'Toggle'
+                    'command': 'sass-director:toggle'
+                }
+                {
+                    'label': 'Add Manifest File'
+                    'command': 'sass-director:add-manifest-file'
+                }
+                {
+                    'label': 'Remove Manifest'
+                    'command': 'sass-director:remove-manifest-file'
+                }
+                {
+                    'label': 'Generate'
+                    'command': 'sass-director:generate'
+                }
+            ]
+        ]
+    }
 ]
 'fileTypes': [
     'sass'

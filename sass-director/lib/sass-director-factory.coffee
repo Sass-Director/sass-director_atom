@@ -59,7 +59,6 @@ class SassDirectorFactory
                 i = @manifest_files.indexOf(manifest.path)
                 @manifest_files.splice(i, 1)
                 atom.notifications.addSuccess(manifest.name + ' was removed')
-        console.log 'Watched Manifest Files: ', @manifest_files
         return true
 
     generate: ->
@@ -81,25 +80,31 @@ class SassDirectorFactory
 
             manifest = String(@manifest_files[0])
             root_path = path.dirname(manifest)
-            # Construct DIRs and Files using fs
+            # Construct dirs and Files using fs
             for dir in dirs
                 file_name = '_' + dir.pop() + '.scss'
                 file_path = dir_path = root_path
+
+                console.log 'Dir: ' + dir
+                console.log 'Dirs: ' + dirs
+
                 for directory_name in dir
+                    console.log 'Dirname: ' + directory_name
                     file_path = path.join(file_path, directory_name)
+                    dir_path = path.join(dir_path, directory_name)
                     # Check if dir exists -> produce error
                     if !fs.existsSync(path.join(root_path, directory_name))
                         # Dir doesnt exist -> create it
                         # Update dir_path
-                        dir_path = path.join(dir_path, directory_name)
                         mkdirp.sync dir_path
                         atom.notifications.addSuccess 'Directory ' + dir_path + ' was created'
                     else
                         continue if dir_path is root_path
                         atom.notifications.addError 'Directory ' + dir_path + ' already exists'
-                console.log 'FilePath: ' + file_path
+
                 if !fs.existsSync(path.join(file_path, file_name))
                     fs.writeFileSync(path.join(file_path, file_name))
                     atom.notifications.addSuccess 'File ' + path.join(file_path, file_name) + ' was written'
                 else
                     atom.notifications.addError 'File: ' + path.join(file_path, file_name) + ' already exists'
+    # end generate ->
