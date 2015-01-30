@@ -7,9 +7,9 @@ path = require 'path'
 module.exports =
 class SassDirectorFactory
     # Generator Variables
-    root_path: ""
+    root_path: ''
     manifest_files: []
-    strip_list: [';', '@import', '\'', '\"']
+    strip_list: [';', '@import', '\"', '\'']
 
     constructor: (state) ->
         @__buildPaths__()
@@ -59,24 +59,47 @@ class SassDirectorFactory
                 i = @manifest_files.indexOf(manifest.path)
                 @manifest_files.splice(i, 1)
                 atom.notifications.addSuccess(manifest.name + ' was removed')
-        console.log "Watched Manifest Files: ", @manifest_files
+        console.log 'Watched Manifest Files: ', @manifest_files
         return true
 
     generate: ->
-        console.log "Begin Generating Sequence..."
+        console.log 'Begin Generating Sequence...'
         if @manifest_files.length == 0
             atom.confirm
                 message: 'No Manifest Files are registered'
                 buttons:
-                    Dismiss: -> console.log "Abort Generate due to no manifest files logged"
+                    Dismiss: -> console.log 'Abort Generate due to no manifest files logged'
             return false
         else
             imports = @__getImports__()
             dirs = @__expandImports__(imports)
+            # Get the working path of the manifest
+            return false if @manifest_files.length == 0
+
             path = require 'path'
+            mkdirp = require 'mkdirp'
 
-            editor = atom.workspace.getActiveEditor()
-            p = editor.getPath()
-            root = path.dirname(p)
-
+            manifest = String(@manifest_files[0])
+            root_path = path.dirname(manifest)
             # Construct DIRs and Files using fs
+            for dir in dirs
+                file_name = '_' + dir.pop() + '.scss'
+                file_path = dir_path = root_path
+                for directory_name in dir
+                    file_path = path.join(file_path, directory_name)
+                    # Check if dir exists -> produce error
+                    if !fs.existsSync(path.join(root_path, directory_name))
+                        # Dir doesnt exist -> create it
+                        # Update dir_path
+                        dir_path = path.join(dir_path, directory_name)
+                        mkdirp.sync dir_path
+                        atom.notifications.addSuccess 'Directory ' + dir_path + ' was created'
+                    else
+                        continue if dir_path is root_path
+                        atom.notifications.addError 'Directory ' + dir_path + ' already exists'
+                console.log 'FilePath: ' + file_path
+                if !fs.existsSync(path.join(file_path, file_name))
+                    fs.writeFileSync(path.join(file_path, file_name))
+                    atom.notifications.addSuccess 'File ' + path.join(file_path, file_name) + ' was written'
+                else
+                    atom.notifications.addError 'File: ' + path.join(file_path, file_name) + ' already exists'
