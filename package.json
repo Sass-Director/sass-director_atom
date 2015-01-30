@@ -6,7 +6,7 @@
   "activationCommands": {
     "atom-workspace": "sass-director:toggle"
   },
-  "repository": "https://github.com/atom/sass-director",
+  "repository": "https://github.com/Sass-Director/Sass-Director_Atom",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
