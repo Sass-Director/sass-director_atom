@@ -1,7 +1,7 @@
 {
   "name": "sass-director",
   "main": "./lib/sass-director",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Sass Director helps manage Sass Projects better by tracking your manifest files",
   "activationCommands": {
     "atom-workspace": "sass-director:toggle"
