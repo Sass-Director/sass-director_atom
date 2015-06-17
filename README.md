@@ -1,5 +1,7 @@
 # Sass Director Package for Atom
 
+[![GitHub issues](https://img.shields.io/github/issues/Sass-Director/Sass-Director_Atom.svg?style=plastic)](https://github.com/Sass-Director/Sass-Director_Atom/issues) [![GitHub forks](https://img.shields.io/github/forks/Sass-Director/Sass-Director_Atom.svg?style=plastic)](https://github.com/Sass-Director/Sass-Director_Atom/network) [![GitHub stars](https://img.shields.io/github/stars/Sass-Director/Sass-Director_Atom.svg?style=plastic)](https://github.com/Sass-Director/Sass-Director_Atom/stargazers) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=plastic)](https://raw.githubusercontent.com/Sass-Director/Sass-Director_Atom/master/LICENSE)
+
 Sass Director helps manage Sass Projects better by tracking your manifest files
 
 ### Installation
