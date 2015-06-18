@@ -6,7 +6,7 @@
 
 #### Atom:
 
-[![APM](https://img.shields.io/apm/dm/sass-director.svg)](https://atom.io/packages/sass-director)
+[![APM](https://img.shields.io/apm/dm/sass-director.svg?style=plastic)](https://atom.io/packages/sass-director)
 
 Sass Director helps manage Sass Projects better by tracking your manifest files
 
